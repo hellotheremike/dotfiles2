@@ -5,9 +5,19 @@ vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " "
 vim.g.background = "light"
 
-vim.cmd("set number")
+-- vim.cmd("set number")
 vim.cmd("set relativenumber")
 vim.opt.swapfile = false
+
+vim.keymap.set("n", "<leader>n", function()
+  if vim.wo.relativenumber then
+    vim.wo.relativenumber = false
+    vim.wo.number = true
+  else
+    vim.wo.relativenumber = true
+    vim.wo.number = true
+  end
+end, { desc = "Toggle line numbers" })
 
 -- Navigate vim panes better
 -- vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
