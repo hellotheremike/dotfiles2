@@ -5,6 +5,8 @@ vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " "
 vim.g.background = "light"
 
+vim.cmd("set number")
+vim.cmd("set relativenumber")
 vim.opt.swapfile = false
 
 -- Navigate vim panes better

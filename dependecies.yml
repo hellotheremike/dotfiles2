@@ -1,0 +1,6 @@
+- dependencies:
+    repos:
+      - https://github.com/BurntSushi/ripgrep # Make telescope ignore .gitingore matches
+      - https://github.com/tmux/tmux/wiki/Installing # tmux
+      - https://github.com/catppuccin/tmux # theming
+      - https://github.com/neovim/neovim
