@@ -4,3 +4,4 @@
       - https://github.com/tmux/tmux/wiki/Installing # tmux
       - https://github.com/catppuccin/tmux # theming
       - https://github.com/neovim/neovim
+      -  https://github.com/go-delve/delve/tree/master/Documentation/installation # Go debugger
