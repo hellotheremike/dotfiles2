@@ -97,23 +97,4 @@ return {
 			},
 		},
 	},
-	{
-		"luckasRanarison/tailwind-tools.nvim",
-		name = "tailwind-tools",
-		build = ":UpdateRemotePlugins",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-telescope/telescope.nvim", -- optional
-			"neovim/nvim-lspconfig", -- optional
-		},
-		opts = {}, -- your configuratio
-		config = function()
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				pattern = { "*.html", "*.jsx", "*.tsx" }, -- adjust filetypes
-				callback = function()
-					vim.cmd("TailwindSortSync") -- use Sync version if you want blocking
-				end,
-			})
-		end,
-	},
 }

@@ -1,24 +1,50 @@
 return {
-	"nvimtools/none-ls.nvim",
-	dependencies = {
-		"nvimtools/none-ls-extras.nvim",
+	{
+		"nvimtools/none-ls.nvim",
+		dependencies = { "nvimtools/none-ls-extras.nvim" },
+		config = function()
+			local null_ls = require("null-ls")
+			local utils = require("null-ls.utils")
+
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				callback = function()
+					vim.lsp.buf.format({ async = false })
+				end,
+			})
+
+			local root =
+				utils.root_pattern(".git", "package.json", ".prettierrc", ".prettierrc.json")(vim.fn.expand("%:p"))
+
+			null_ls.setup({
+				root_dir = function()
+					return root
+				end,
+				sources = {
+					null_ls.builtins.formatting.prettier.with({
+						extra_args = { "--plugin-search-dir=" .. root },
+						-- Optional: define the working directory (useful in monorepos)
+						cwd = function(params)
+							return utils.root_pattern(".git")(params.bufname)
+						end,
+						env = {
+							PRETTIER_LOG_LEVEL = "debug",
+						},
+					}),
+					require("none-ls.diagnostics.eslint_d"),
+				},
+			})
+
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				pattern = { "*.tsx", "*.jsx", "*.html" },
+				callback = function()
+					vim.lsp.buf.format({
+						async = false,
+						filter = function(client)
+							return client.name == "null-ls"
+						end,
+					})
+				end,
+			})
+		end,
 	},
-	config = function()
-		local null_ls = require("null-ls")
-		null_ls.setup({
-			sources = {
-				null_ls.builtins.formatting.stylua,
-				null_ls.builtins.formatting.prettier,
-				require("none-ls.diagnostics.eslint_d"),
-			},
-		})
-
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			callback = function()
-				vim.lsp.buf.format()
-			end,
-		})
-
-		vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
-	end,
 }
