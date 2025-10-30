@@ -12,7 +12,7 @@ return {
 				},
 			})
 
-      -- Create one session per git branch
+			-- Create one session per git branch
 			local function get_session_name()
 				local name = vim.fn.getcwd()
 				local branch = vim.trim(vim.fn.system("git branch --show-current"))

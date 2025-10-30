@@ -21,7 +21,9 @@ return {
 				end,
 				sources = {
 					null_ls.builtins.formatting.prettier.with({
-						extra_args = { "--plugin-search-dir=" .. root },
+						--	extra_args = { "--plugin-search-dir=" .. root },
+
+						extra_args = { "--plugin-search-dir=." },
 						-- Optional: define the working directory (useful in monorepos)
 						cwd = function(params)
 							return utils.root_pattern(".git")(params.bufname)
