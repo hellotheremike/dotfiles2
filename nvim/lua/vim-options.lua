@@ -12,6 +12,7 @@ vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " "
 vim.g.background = "light"
+map("n", "<Esc>", ":nohlsearch<CR>", { noremap = true, silent = true })
 
 vim.cmd("set number")
 vim.cmd("set relativenumber")
