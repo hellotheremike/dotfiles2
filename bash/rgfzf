@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Use plain fzf because we're already in a tmux popup
+
+# --- DEBUG HOOKS -------------------------------------------------------------
+# Enable by prefixing the command with: RGFZF_DEBUG=1 rgfzf
+RGFZF_DEBUG="${RGFZF_DEBUG:-0}"
+log() { [[ "$RGFZF_DEBUG" == "1" ]] && printf '%s\n' "$*" >> "${RGFZF_LOG:-$HOME/.cache/rgfzf.log}"; }
+msg() { [[ "$RGFZF_DEBUG" == "1" && -n "$TMUX" ]] && tmux display-message -- "$*"; }
+mkdir -p "${RGFZF_LOG:-$HOME/.cache}" 2>/dev/null || true
+log "==== $(date) ===="
+log "initial PWD: $(pwd)"
+log "TMUX: ${TMUX:-<empty>}"
+# ---------------------------------------------------------------------------
+
+
+if [[ -n "$TMUX" ]]; then
+  pane_path=$(tmux display -p -F "#{pane_current_path}" 2>/dev/null)
+  cd "$pane_path" || exit 1
+fi
+
+result=$(
+  command rg --color=always --line-number --no-heading --smart-case "${*:-}" \
+    | command fzf --ansi --delimiter ':' \
+      --preview 'bat --style=plain --color=always --highlight-line {2} {1}' \
+      --preview-window ~8,+{2}-5 \
+    | awk -F':' '{print $1 ":" $2}'
+)
+
+[[ -z "$result" ]] && exit 0
+file="${result%%:*}"
+line="${result##*:}"
+
+# --- tmux + nvim socket integration ----------------------------------------
+if [[ -n "$TMUX" ]]; then
+  pane_id=$(tmux display -p '#{pane_id}')
+  socket_var="NVIM_SOCKET_${pane_id}"
+  nvim_socket=$(tmux show-environment "$socket_var" 2>/dev/null | cut -d= -f2)
+
+  if [[ -S "$nvim_socket" ]]; then
+    # ✅ send to existing Neovim in current pane
+    nvim --server "$nvim_socket" --remote-send "<CMD>edit ${file}<CR><CMD>${line}<CR>"
+    exit 0
+  else
+    # ✅ open a new horizontal split running Neovim
+    tmux split-window -v "nvim +${line} '${file}'"
+    exit 0
+  fi
+fi
+
+# --- fallback: outside tmux ------------------------------------------------
+nvim +${line} "${file}"
+
