@@ -36,6 +36,7 @@ return {
 				map("n", "<leader>fd", vim.diagnostic.open_float, opts)
 				map("n", "[d", vim.diagnostic.goto_prev, opts)
 				map("n", "]d", vim.diagnostic.goto_next, opts)
+
 				vim.diagnostic.config({
 					virtual_text = true,
 					signs = true,
@@ -49,6 +50,7 @@ return {
 			vim.lsp.config("ts_ls", {
 				capabilites = capabilites,
 				on_attach = on_attach,
+				--root_dir = require("lspconfig.util").root_pattern("tsconfig.json", ".git"),
 				settings = {
 					typescript = {
 						suggest = {

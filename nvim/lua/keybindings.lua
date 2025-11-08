@@ -1,6 +1,19 @@
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
+vim.g.mapleader = " "
+vim.g.background = "light"
+map("n", "<Esc>", ":nohlsearch<CR>", { noremap = true, silent = true })
+
+vim.cmd("set expandtab")
+vim.cmd("set tabstop=4")
+vim.cmd("set softtabstop=2")
+vim.cmd("set shiftwidth=2")
+vim.cmd("set number")
+vim.cmd("set relativenumber")
+
+vim.opt.swapfile = false
+
 -- Move to previous/next
 map("n", "<A-,>", "<Cmd>BufferPrevious<CR>", opts)
 map("n", "<A-.>", "<Cmd>BufferNext<CR>", opts)
@@ -24,24 +37,9 @@ map("n", "<A-0>", "<Cmd>BufferLast<CR>", opts)
 -- Pin/unpin buffer
 map("n", "<A-p>", "<Cmd>BufferPick<CR>", opts)
 
--- Goto pinned/unpinned buffer
---                 :BufferGotoPinned
---                 :BufferGotoUnpinned
-
 -- Close buffer
 map("n", "<A-c>", "<Cmd>BufferClose<CR>", opts)
 
--- Wipeout buffer
---                 :BufferWipeout
-
--- Close commands
---                 :BufferCloseAllButCurrent
---                 :BufferCloseAllButPinned
---                 :BufferCloseAllButCurrentOrPinned
---                 :BufferCloseBuffersLeft
---                 :BufferCloseBuffersRight
-
--- Magic buffer-picking mode
 --map('n', '<C-p>',   '<Cmd>BufferPick<CR>', opts)
 map("n", "<C-s-p>", "<Cmd>BufferPickDelete<CR>", opts)
 
@@ -52,6 +50,7 @@ map("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>", opts)
 map("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>", opts)
 map("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", opts)
 
--- Other:
--- :BarbarEnable - enables barbar (enabled by default)
--- :BarbarDisable - very bad command, should never be used
+vim.keymap.set("n", "<A-->", ":m .+1<CR>==", { silent = true, desc = "Move line down" })
+vim.keymap.set("n", "<A-+>", ":m .-2<CR>==", { silent = true, desc = "Move line up" })
+vim.keymap.set("v", "<A-->", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move block down" })
+vim.keymap.set("v", "<A-+>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move block up" })
