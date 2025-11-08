@@ -1,0 +1,166 @@
+{
+  "tmux": {
+    "copy": {
+      "start": "prefix + [",
+      "mark": "prefix",
+      "copy": "enter",
+      "paste": "prefix + ]"
+    },
+    "session": {
+      "new": "tmux new -s <name> - create a new named session",
+      "list": "tmux ls - list all sessions",
+      "attach": "tmux attach -t <name> - attach to an existing session",
+      "detach": "prefix + d - detach from current session",
+      "rename": "prefix + $ - rename current session"
+    },
+    "window": {
+      "new": "prefix + c - create new window",
+      "next/prev": "prefix + n / prefix + p - switch windows",
+      "rename": "prefix + , - rename current window",
+      "kill": "prefix + & - close current window"
+    },
+    "pane": {
+      "split_h": "prefix + % - split horizontally",
+      "split_v": "prefix + \" - split vertically",
+      "switch": "prefix + arrow keys - move between panes",
+      "resize": "prefix + ctrl + arrow keys - resize pane",
+      "swap": "prefix + { or } - swap panes"
+    },
+    "plugins": {
+      "option+c": "search directories",
+      "ctrl+r": "search history with fzf",
+      "ctrl+t": "search files in all sub-directories",
+      "ctrl+f": "grep all files in sub-directories with preview (fzf+bat), enter will open in new pane with nvim"
+    }
+  },
+  "plugins": {
+    "ctrl+b": "open filetree",
+    "ctrl+n": "start multiline edit",
+    "ctrl+f": "grep all files in sub-directories with preview (fzf+bat), enter will open in existing vim"
+  },
+  "nvim": {
+    "command_line": {
+      ":": "enter command line",
+      "%": "refer to entire buffer (open file)",
+      "%!jq '.'": "filter entire file through jq (system JSON processor), pretty-print JSON"
+    },
+    "change": {
+      "c": "change operator, used with a motion",
+      "cw": "change from the cursor position to the end of the current word",
+      "ciw": "change the entire word under the cursor",
+      "caw": "change a word (includes surrounding spaces)",
+      "ci(": "change inside parentheses, brackets, or quotes",
+      "ctx": "change until character x",
+      "cc": "change entire line (same as S)",
+      "C": "change from cursor to end of line (c$)",
+      "cl": "change one character (same as 's')"
+    },
+    "modes": {
+      "esc": "normal mode",
+      "i": "insert at cursor position",
+      "I": "insert at beginning of line",
+      "a": "append after cursor position",
+      "A": "append at end of line"
+    },
+    "manipulate": {
+      "u": "undo last change",
+      "ctrl+r": "redo",
+      "y": "yank/copy selected text",
+      "yy": "yank current line",
+      "p": "paste below cursor",
+      "P": "paste above cursor",
+      "o": "insert on new line below",
+      "O": "insert on new line above",
+      "=": "auto-indent selected text"
+    },
+    "navigate": {
+      "f{char}": "find next occurrence of character",
+      "t{char}": "move before next occurrence of character",
+      ";": "repeat last find command forward",
+      ",": "repeat last find command backward",
+      "n/N": "next/previous search result",
+      "*": "highlight all occurrences of word under cursor",
+      "ctrl+u/d": "scroll page up/down",
+      "%": "jump to matching bracket, parenthesis, or brace",
+      "0": "go to beginning of line",
+      "_": "go to first non-blank character in line",
+      "$": "go to end of line",
+      "za": "toggle fold",
+      "zR": "unfold all",
+      "zM": "fold all"
+    },
+    "select": {
+      "v": "enter visual mode",
+      "va{": "select around braces (including braces)",
+      "vi{": "select inside braces (excluding braces)",
+      "vip": "select paragraph",
+      "ctrl+v, k/l, I, esc": "Perform an insertion on multipple lines"
+    },
+    "buffers_and_tabs": {
+      ":ls": "list open buffers",
+      ":b<number>": "switch to buffer by number",
+      ":bd": "delete current buffer",
+      ":tabnew": "open new tab",
+      "gt / gT": "next/previous tab"
+    },
+    "search_replace_advanced": {
+      ":%s/foo/bar/g": "replace all occurrences of 'foo' with 'bar' in file",
+      ":%s/foo/bar/gc": "replace with confirmation",
+      ":noh": "clear search highlighting"
+    },
+    "visual_tips": {
+      "gv": "reselect last visual selection",
+      "> / <": "indent/unindent selection",
+      "J": "join selected lines"
+    },
+    "registers": {
+      "%y": "yank entire file",
+      "%y+": "yank entire file to system clipboard",
+      "\"+y": "yank to system clipboard",
+      "\"+p": "paste from system clipboard",
+      "\"_d": "delete without affecting clipboard (black hole register)"
+    },
+    "marks": {
+      "ma": "set mark 'a' at cursor",
+      "'a": "jump to mark 'a'",
+      ":marks": "list all marks"
+    },
+    "macros": {
+      "q{letter}": "start recording macro into register {letter}",
+      "q": "stop recording macro",
+      "@{letter}": "play macro from register {letter}",
+      "@@": "replay last macro"
+    },
+    "editing_shortcuts": {
+      "J": "join next line with a space",
+      "gJ": "join next line without space",
+      "xp": "swap two characters",
+      "U": "restore entire line to last saved state"
+    }
+  },
+  "jq": {
+    "basic": {
+      "jq '.'": "identity filter (whole JSON) - pretty-prints JSON",
+      "jq '.key'": "get a specific key",
+      "jq '.key.subkey'": "access nested keys",
+      "jq '.[]'": "iterate over array elements",
+      "jq -c '.'": "compact output - JSON on one line"
+    },
+    "filters": {
+      "jq '.key | length'": "get length of array or string",
+      "jq '.[] | .name'": "extract 'name' from each array element",
+      "jq '.[0]'": "get first element of array",
+      "jq 'keys'": "list all keys in an object",
+      "jq 'map(.key)'": "extract key from each object in array"
+    },
+    "output_control": {
+      "jq -r '.key'": "raw output (no quotes)",
+      "jq -c '.[]'": "compact each array element on one line"
+    },
+    "math_and_logic": {
+      "jq '.value + 1'": "increment numeric field",
+      "jq 'select(.active == true)'": "filter only active elements",
+      "jq 'sort_by(.id)'": "sort array by key"
+    }
+  }
+}
