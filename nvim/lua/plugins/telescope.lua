@@ -2,6 +2,12 @@ return {
   {
     "nvim-telescope/telescope-ui-select.nvim",
   },
+  { "nvim-telescope/telescope-fzf-native.nvim", event = "VeryLazy", build = "make" },
+  {
+    "junegunn/fzf",
+    event = "VeryLazy",
+    build = ":call fzf#install()",
+  },
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.5",
