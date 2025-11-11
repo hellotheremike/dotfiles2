@@ -41,6 +41,7 @@
   "nvim": {
     "command_line": {
       ":": "enter command line",
+      "/": "search in file (n/N to loop results)",
       "%": "refer to entire buffer (open file)",
       "%!jq '.'": "filter entire file through jq (system JSON processor), pretty-print JSON"
     },
