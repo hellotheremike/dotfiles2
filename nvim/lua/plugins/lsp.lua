@@ -84,8 +84,8 @@ return {
 
       opts = {
         -- Defaults
-        enable_close = true,       -- Auto close tags
-        enable_rename = true,      -- Auto rename pairs of tags
+        enable_close = true,           -- Auto close tags
+        enable_rename = true,          -- Auto rename pairs of tags
         enable_close_on_slash = false, -- Auto close on trailing </
       },
       -- Also override individual filetype configs, these take priority.
@@ -129,7 +129,17 @@ return {
         local map = vim.keymap.set
         map("n", "K", vim.lsp.buf.hover, opts)
         map("n", "<leader>gd", vim.lsp.buf.definition, opts)
-        map("n", "<leader>gr", vim.lsp.buf.references, opts)
+        map("n", "<leader>gr", function()
+            require('telescope.builtin').lsp_references({
+              fname_width = 100,
+              path_display = {
+                filename_first = {
+                  reverse_directories = false
+                }
+              },
+            })
+          end,
+          opts)
         map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
         map("n", "<leader>rn", vim.lsp.buf.rename, opts)
         map("n", "<leader>fd", vim.diagnostic.open_float, opts)

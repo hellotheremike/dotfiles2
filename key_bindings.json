@@ -39,9 +39,20 @@
     "ctrl+f": "grep all files in sub-directories with preview (fzf+bat), enter will open in existing vim"
   },
   "nvim": {
+    "general": {
+      "/": "search in file (n/N to loop results)",
+    },
+    "windows_and_buffers": {
+      "ctrl+w": "leader key to enter window mode"
+      "=": "buffers equal screen height size",
+      "_": "buffers max screen height size",
+      "T": "separeate split buffer into new window/tab",
+      "v": "create a vertical split"
+      "S": "create a horisontal split",
+      "q": "close buffer"
+    },
     "command_line": {
       ":": "enter command line",
-      "/": "search in file (n/N to loop results)",
       "%": "refer to entire buffer (open file)",
       "%!jq '.'": "filter entire file through jq (system JSON processor), pretty-print JSON"
     },
